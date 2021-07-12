@@ -1,23 +1,24 @@
 package services;
 
 import data_access.*;
+import services.results.ClearResult;
 
-public class ClearService {
-
-    private Database databaseAccess;
+public class ClearService extends Service {
 
     /**
-     * Instantiates a new <code>Database</code> object
+     * Constructs ClearService class with default Service database connection
      */
     public ClearService() {
-        databaseAccess = new Database();
+        super();
     }
 
     /**
      * Deletes ALL data from the database, including user accounts, auth tokens, and generated person and event data
+     * @return <code>ClearResult</code>
      * @throws DataAccessException - catches SQl errors
      */
-    public void clearTables() throws DataAccessException {
-        databaseAccess.clearAllTables();
+    public ClearResult clear() throws DataAccessException {
+        database.clearAllTables();
+        return null;
     }
 }
