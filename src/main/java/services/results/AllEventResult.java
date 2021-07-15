@@ -5,6 +5,11 @@ import model.Event;
 import java.util.ArrayList;
 
 public class AllEventResult extends Result {
+
+    public AllEventResult() {
+        super();
+    }
+
     /**
      * Adds person list to message and makes success true
      * @param personList

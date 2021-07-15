@@ -15,6 +15,9 @@ public class LoadRequest {
     private ArrayList<Person> personList;
     private ArrayList<Event> eventList;
 
+    public LoadRequest() {
+
+    }
     /**
      * Constructor to create LoadRequest object
      * @param userList
@@ -79,5 +82,14 @@ public class LoadRequest {
      */
     public void setEventList(ArrayList<Event> eventList) {
         this.eventList = eventList;
+    }
+
+    @Override
+    public String toString() {
+        return "LoadRequest{" +
+                "userList=" + userList.toString() +
+                ", personList=" + personList.toString() +
+                ", eventList=" + eventList.toString() +
+                '}';
     }
 }

@@ -1,17 +1,14 @@
 package personalTests;
 
 import client.Client;
-import data_generation.RandomItemSelector;
+import data_generation.RandomItemGenerator;
 import logs.InitLogs;
 import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import data_access.*;
 import model.*;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -46,7 +43,7 @@ public class PersonalTests {
     @Test
     @DisplayName("Gson parser for names")
     public void gsonNameParser(TestInfo testInfo) {
-        RandomItemSelector item = new RandomItemSelector();
+        RandomItemGenerator item = new RandomItemGenerator();
         try {
             item.getRandomName("json/snames.json");
         } catch (IOException e) {
@@ -57,12 +54,25 @@ public class PersonalTests {
     @Test
     @DisplayName("Gson parser for locations")
     public void gsonLocationParser(TestInfo testInfo) {
-        RandomItemSelector item = new RandomItemSelector();
+        RandomItemGenerator item = new RandomItemGenerator();
         try {
             item.getRandomLocation("json/locations.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    @DisplayName("Random ID generator")
+    public void randomIDGenerator(TestInfo testInfo) {
+        ArrayList<String> ids = new ArrayList<>();
+
+        RandomItemGenerator items = new RandomItemGenerator(ids);
+
+        for (int i = 0; i < 20; i++) {
+            System.out.println(items.getRandomID());
+        }
+
     }
 /*
     @BeforeEach

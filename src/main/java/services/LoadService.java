@@ -4,6 +4,7 @@ import data_access.DataAccessException;
 import data_access.EventDao;
 import data_access.PersonDao;
 import data_access.UserDao;
+import services.request.LoadRequest;
 import services.request.LoginRequest;
 import services.results.LoadResult;
 
@@ -38,7 +39,7 @@ public class LoadService extends Service{
      * @return <code>LoadResult</code>
      * @throws DataAccessException
      */
-    public LoadResult load(LoginRequest request) throws DataAccessException {
+    public LoadResult load(LoadRequest request) throws DataAccessException {
         return null;
     }
 

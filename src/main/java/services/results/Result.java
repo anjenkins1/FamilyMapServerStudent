@@ -1,6 +1,6 @@
 package services.results;
 
-abstract class Result {
+public class Result {
 
     /**
      * Message stored in the result for success or failure
@@ -11,6 +11,13 @@ abstract class Result {
      * Stores whether or not the action was successful
      */
     public boolean success;
+
+    public Result(){};
+
+    public Result(String message, boolean success) {
+        this.message = message;
+        this.success = success;
+    }
 
     /**
      * Gets the value of message

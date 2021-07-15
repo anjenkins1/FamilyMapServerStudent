@@ -1,14 +1,27 @@
 package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
+import services.ClearService;
+import services.results.Result;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 
-public class ClearHandler implements HttpHandler {
+public class ClearHandler extends PostRequestHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-
+        if (exchange.getRequestMethod().toUpperCase().equals("POST")) {
+            ClearService clearService = new ClearService();
+            Result result = clearService.clear();
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_ACCEPTED, 0);
+            OutputStream responseBody = exchange.getResponseBody();
+            writeJsonResponse(result, responseBody);
+            responseBody.close();
+        }
+        else {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_METHOD, 0);
+        }
     }
 }
