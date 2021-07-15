@@ -8,6 +8,9 @@ import data_access.PersonDao;
 import services.request.RegisterRequest;
 import services.results.RegisterResult;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class RegisterService extends Service {
 
     /**
@@ -23,12 +26,17 @@ public class RegisterService extends Service {
     private UserDao userDataAcccess;
     private PersonDao personDataAccess;
     private AuthTokenDao authTokenDataAccess;
+    private Connection conn;
 
     /**
      * Constructs RegisterService initializing database access objects through database connection
      */
     public RegisterService() throws DataAccessException {
 
+        conn = database.openConnection();
+        userDataAcccess = new UserDao(conn);
+        personDataAccess = new PersonDao(conn);
+        authTokenDataAccess = new AuthTokenDao(conn);
     }
 
     /**
@@ -37,6 +45,8 @@ public class RegisterService extends Service {
      * @return <code>RegisterResult</code>
      */
     public RegisterResult register(RegisterRequest request) throws DataAccessException {
+
+
         return null;
     }
 

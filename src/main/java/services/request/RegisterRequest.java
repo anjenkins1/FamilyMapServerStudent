@@ -1,5 +1,7 @@
 package services.request;
 
+import model.User;
+
 public class RegisterRequest {
 
     /**
@@ -29,6 +31,7 @@ public class RegisterRequest {
         this.lastName = lastName;
         this.gender = gender;
     }
+
 
     /**
      * Gets the value of username

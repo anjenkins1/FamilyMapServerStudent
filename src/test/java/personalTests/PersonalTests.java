@@ -1,6 +1,7 @@
 package personalTests;
 
 import client.Client;
+import data_generation.RandomItemSelector;
 import logs.InitLogs;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +10,7 @@ import data_access.*;
 import model.*;
 
 import javax.xml.crypto.Data;
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -41,6 +43,28 @@ public class PersonalTests {
         PersonalTests.displayCurrentTest = displayCurrentTest;
     }
 
+    @Test
+    @DisplayName("Gson parser for names")
+    public void gsonNameParser(TestInfo testInfo) {
+        RandomItemSelector item = new RandomItemSelector();
+        try {
+            item.getRandomName("json/snames.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @DisplayName("Gson parser for locations")
+    public void gsonLocationParser(TestInfo testInfo) {
+        RandomItemSelector item = new RandomItemSelector();
+        try {
+            item.getRandomLocation("json/locations.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+/*
     @BeforeEach
     @DisplayName("Connecting to Database")
     public void setup() throws DataAccessException {
@@ -182,6 +206,7 @@ public class PersonalTests {
         testPerson = pDao.getSinglePerson(P_ALMA.getPersonID());
         assertNull(testPerson);
     }
+*/
 
 /*
     @Test
