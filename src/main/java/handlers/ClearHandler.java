@@ -15,7 +15,12 @@ public class ClearHandler extends PostRequestHandler {
         if (exchange.getRequestMethod().toUpperCase().equals("POST")) {
             ClearService clearService = new ClearService();
             Result result = clearService.clear();
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_ACCEPTED, 0);
+            if (result.isSuccess()) {
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+            }
+            else {
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+            }
             OutputStream responseBody = exchange.getResponseBody();
             writeJsonResponse(result, responseBody);
             responseBody.close();

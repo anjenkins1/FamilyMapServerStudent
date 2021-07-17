@@ -38,4 +38,61 @@ public class RegisterResult extends Result{
         this.success = false;
     }
 
+    public RegisterResult() {
+
+    }
+
+    /**
+     * Gets the value of authtoken
+     *
+     * @return authtoken
+     */
+    public String getAuthtoken() {
+        return authtoken;
+    }
+
+    /**
+     * Sets the authtoken - You can use getAuthtoken() to get the value of authtoken
+     *
+     * @param authtoken variable to be set
+     */
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
+    }
+
+    /**
+     * Gets the value of username
+     *
+     * @return username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Sets the username - You can use getUsername() to get the value of username
+     *
+     * @param username variable to be set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * Gets the value of personID
+     *
+     * @return personID
+     */
+    public String getPersonID() {
+        return personID;
+    }
+
+    /**
+     * Sets the personID - You can use getPersonID() to get the value of personID
+     *
+     * @param personID variable to be set
+     */
+    public void setPersonID(String personID) {
+        this.personID = personID;
+    }
 }

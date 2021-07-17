@@ -77,6 +77,10 @@ public class Event {
         this.year = year;
     }
 
+    public Event() {
+
+    }
+
     /**
      * Gets the value of associatedUsername
      *

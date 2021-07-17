@@ -1,12 +1,12 @@
 package services;
 
-import data_access.DataAccessException;
-import data_access.EventDao;
-import data_access.PersonDao;
-import data_access.UserDao;
+import data_access.*;
+import model.*;
 import services.request.LoadRequest;
 import services.request.LoginRequest;
 import services.results.LoadResult;
+
+import java.sql.Connection;
 
 public class LoadService extends Service{
 
@@ -25,12 +25,20 @@ public class LoadService extends Service{
     private UserDao userDataAccess;
     private PersonDao personDataAccess;
     private EventDao eventsDataAccess;
+    private Connection conn;
 
     /**
      * Default LoadService Constructor
      */
     public LoadService() {
-
+        try {
+            conn = database.openConnection();
+            userDataAccess = new UserDao(conn);
+            personDataAccess = new PersonDao(conn);
+            eventsDataAccess = new EventDao(conn);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -40,7 +48,35 @@ public class LoadService extends Service{
      * @throws DataAccessException
      */
     public LoadResult load(LoadRequest request) throws DataAccessException {
-        return null;
+        LoadResult result;
+
+        try {
+            database.clearAllTables();
+            for (User s : request.getUsers()) {
+                numUsersAdded++;
+                userDataAccess.insert(s);
+            }
+            for (Person s : request.getPersons()) {
+                numPersonsAdded++;
+                personDataAccess.insert(s);
+            }
+            for (Event s : request.getEvents()) {
+                numEventsAdded++;
+                eventsDataAccess.insert(s);
+            }
+            message = String.format("Successfully added %d users, %d persons, and %d events to the database", numUsersAdded, numPersonsAdded, numEventsAdded);
+            success = true;
+            result = new LoadResult(message, success);
+            database.closeConnection(true);
+            return result;
+
+        } catch (DataAccessException e) {
+            message = "Error: " + e.toString();
+            success = false;
+            result = new LoadResult(message, success);
+            database.closeConnection(false);
+            return result;
+        }
     }
 
     /**

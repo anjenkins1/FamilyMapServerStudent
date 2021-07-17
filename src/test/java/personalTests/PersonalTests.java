@@ -55,11 +55,7 @@ public class PersonalTests {
     @DisplayName("Gson parser for locations")
     public void gsonLocationParser(TestInfo testInfo) {
         RandomItemGenerator item = new RandomItemGenerator();
-        try {
-            item.getRandomLocation("json/locations.json");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        item.getRandomLocation("json/locations.json");
     }
 
     @Test

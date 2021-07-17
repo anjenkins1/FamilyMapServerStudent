@@ -16,7 +16,7 @@ import javax.xml.crypto.Data;
 
 public class PersonDao {
 
-    private static Connection databaseConn;
+    private Connection databaseConn;
 
     /**
      * <code>PersonDao</code> must be constructed with an opened database connection

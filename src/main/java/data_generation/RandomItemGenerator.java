@@ -11,13 +11,46 @@ import java.util.*;
 public class RandomItemGenerator {
 
     private static final String CHARACTERS = "1234567890abcdefghijklmnopqrstuvwqyz";
+    private static final String FEMALE_NAME_FILE = "json/fnames.json";
+    private static final String MALE_NAME_FILE = "json/mnames.json";
+    private static final String SURNAMES_NAME_FILE = "json/snames.json";
+    private static final String LOCATIONS_FILE = "json/locations.json";
 
     private ArrayList<String> alreadyUsedIDs;
 
-    public RandomItemGenerator() {}
+    public RandomItemGenerator() {
+        alreadyUsedIDs = new ArrayList<>();
+    }
 
     public RandomItemGenerator(ArrayList<String> alreadyUsedIDs) {
         this.alreadyUsedIDs = alreadyUsedIDs;
+    }
+
+    public String getRandomFemaleName() {
+        try {
+            return getRandomName(FEMALE_NAME_FILE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getRandomMaleName() {
+        try {
+            return getRandomName(MALE_NAME_FILE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getRandomSurname() {
+        try {
+            return getRandomName(SURNAMES_NAME_FILE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -35,7 +68,6 @@ public class RandomItemGenerator {
             Names names = gson.fromJson(bufferedReader, Names.class);
 
             int index = rand.nextInt(names.getNames().size());
-            System.out.println(names.getNames().get(index));
             return names.getNames().get(index);
 
         }
@@ -47,7 +79,7 @@ public class RandomItemGenerator {
      * @return - <code>Location</code>
      * @throws IOException
      */
-    public Location getRandomLocation(String jsonFilePath) throws IOException {
+    public Location getRandomLocation(String jsonFilePath) {
         Random rand = new Random();
         try (FileReader fileReader = new FileReader(jsonFilePath)) {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -56,10 +88,25 @@ public class RandomItemGenerator {
             LocationArray locations = gson.fromJson(bufferedReader, LocationArray.class);
 
             int index = rand.nextInt(locations.getData().size());
-            System.out.println(locations.getData().get(index));
             return locations.getData().get(index);
 
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return null;
+    }
+
+    public Location getRandomLocation() {
+        return getRandomLocation(LOCATIONS_FILE);
+    }
+
+    public int getRandomNumberInRange(int min, int max) {
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 
     public String getRandomID() {
@@ -69,7 +116,6 @@ public class RandomItemGenerator {
         for (int i = 0; i < 8; i++) {
             text[i] = CHARACTERS.charAt(random.nextInt(CHARACTERS.length()));
         }*/
-
         String output = UUID.randomUUID().toString();
 
         if (alreadyUsedIDs.contains(output)) {
@@ -82,6 +128,25 @@ public class RandomItemGenerator {
 
         return null;
     }
+
+    /**
+     * Gets the value of alreadyUsedIDs
+     *
+     * @return alreadyUsedIDs
+     */
+    public ArrayList<String> getAlreadyUsedIDs() {
+        return alreadyUsedIDs;
+    }
+
+    /**
+     * Sets the alreadyUsedIDs - You can use getAlreadyUsedIDs() to get the value of alreadyUsedIDs
+     *
+     * @param alreadyUsedIDs variable to be set
+     */
+    public void setAlreadyUsedIDs(ArrayList<String> alreadyUsedIDs) {
+        this.alreadyUsedIDs = alreadyUsedIDs;
+    }
+
     private class LocationArray {
         private ArrayList<Location> data = new ArrayList<>();
 

@@ -18,12 +18,15 @@ public class LoadHandler extends PostRequestHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         if (exchange.getRequestMethod().toUpperCase().equals("POST")) {
-            LoadService loadService = new LoadService();
-            LoadRequest request = (LoadRequest) getObjectFromInputStream(exchange.getRequestBody(), new LoadRequest());
-            System.out.println(request.toString());
             try {
+                LoadService loadService = new LoadService();
+                LoadRequest request = serializer.deserialize(convertInputStreamToString(exchange.getRequestBody()), LoadRequest.class);
                 LoadResult result = loadService.load(request);
-            } catch (DataAccessException e) {
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_ACCEPTED, 0);
+                OutputStream responseBody = exchange.getResponseBody();
+                writeJsonResponse(result, responseBody);
+                responseBody.close();
+            } catch(DataAccessException e) {
                 e.printStackTrace();
             }
         }

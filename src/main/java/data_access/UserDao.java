@@ -88,6 +88,77 @@ public class UserDao {
     }
 
     /**
+     * Finds the given user and returns their data if they exist within the database
+     * @param username - Username of user being found
+     * @return - <code>User</code>
+     * @throws DataAccessException - catches SQL errors
+     */
+    public User find(String username) throws DataAccessException {
+        User returnUser;
+        ResultSet rs = null;
+
+        String sql = "SELECT * FROM User WHERE username = '" + username + "'";
+        try (PreparedStatement stmt = databaseConn.prepareStatement(sql)) {
+
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                returnUser = new User(rs.getString("person_id"), rs.getString("username"),
+                        rs.getString("password"), rs.getString("email"), rs.getString("first_name"), rs.getString("last_name"),
+                        rs.getString("gender"));
+                return returnUser;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Unable to access specified user");
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Finds if the given user exists in the database
+     * @param username
+     * @return
+     * @throws DataAccessException
+     */
+    public boolean userExists(String username) throws DataAccessException {
+        User returnUser;
+        ResultSet rs = null;
+        boolean exists = false;
+
+        String sql = "SELECT * FROM User WHERE username = '" + username + "'";
+        try (PreparedStatement stmt = databaseConn.prepareStatement(sql)) {
+
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                exists = true;
+                return exists;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Unable to access specified user");
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return exists;
+    }
+
+    /**
      * Clears all data from user table
      * @throws DataAccessException
      */

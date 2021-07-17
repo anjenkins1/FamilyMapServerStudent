@@ -1,8 +1,8 @@
 package services;
 
-import data_access.AuthTokenDao;
-import data_access.EventDao;
-import data_access.PersonDao;
+import data_access.*;
+import data_generation.DataGeneration;
+import model.*;
 import services.results.FillResult;
 
 
@@ -24,7 +24,10 @@ public class FillService extends Service {
      */
     private PersonDao personDataAccess;
     private EventDao eventDataAccess;
+    private UserDao userDataAccess;
     private AuthTokenDao authTokenDataAccess;
+
+    private DataGeneration dataGenerator;
 
     /**
      * Constructor with default numGenerations set at 4
@@ -32,6 +35,7 @@ public class FillService extends Service {
      */
     public FillService (String username) {
         this.username = username;
+        dataGenerator = new DataGeneration();
         this.numGenerations = 4;
     }
 
@@ -41,8 +45,14 @@ public class FillService extends Service {
      * @param numGenerations - user defined numGenerations
      */
     public FillService(String username, int numGenerations)  {
+        dataGenerator = new DataGeneration();
         this.username = username;
         this.numGenerations = numGenerations;
+
+        personDataAccess = new PersonDao(connection);
+        userDataAccess = new UserDao(connection);
+        eventDataAccess = new EventDao(connection);
+        authTokenDataAccess = new AuthTokenDao(connection);
     }
 
     /**
@@ -50,7 +60,44 @@ public class FillService extends Service {
      * @return <code>FillResult</code>
      */
     public FillResult fill() {
-        return null;
+
+        FillResult result;
+
+        try {
+
+            personDataAccess.removeAllUserPersons(username);
+            eventDataAccess.removeAllUserEvents(username);
+
+            User user = userDataAccess.find(username);
+            Person userPerson = new Person();
+            userPerson.setGender(user.getGender());
+            userPerson.setPersonID(generator.getRandomID());
+            userPerson.setAssociatedUsername(username);
+            userPerson.setFirstName(user.getFirstName());
+            userPerson.setLastName(user.getLastName());
+
+            dataGenerator.generateData(userPerson, numGenerations);
+            for (Person p : dataGenerator.getPersons()) {
+                numPersonsAdded++;
+                personDataAccess.insert(p);
+            }
+            for (Event e : dataGenerator.getEvents()) {
+                numEventsAdded++;
+                eventDataAccess.insert(e);
+            }
+            message = String.format("Fill succeeded: %d people added and %d events added", numPersonsAdded, numEventsAdded);
+            success = true;
+            result = new FillResult(message, success);
+            database.closeConnection(true);
+            return result;
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            message = "Error: Unable to fill database";
+            success = false;
+            result = new FillResult(message, success);
+            return result;
+        }
+
     }
 
     /**

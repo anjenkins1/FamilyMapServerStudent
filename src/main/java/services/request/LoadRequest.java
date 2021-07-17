@@ -11,85 +11,84 @@ public class LoadRequest {
     /**
      * Lists of data to be loaded into the database
      */
-    private ArrayList<User> userList;
-    private ArrayList<Person> personList;
-    private ArrayList<Event> eventList;
+    private ArrayList<User> users;
+    private ArrayList<Person> persons;
+    private ArrayList<Event> events;
 
-    public LoadRequest() {
+    public LoadRequest() {}
 
-    }
     /**
      * Constructor to create LoadRequest object
-     * @param userList
-     * @param personList
-     * @param eventList
+     * @param users
+     * @param persons
+     * @param events
      */
-    public LoadRequest(ArrayList<User> userList, ArrayList<Person> personList, ArrayList<Event> eventList) {
-        this.userList = userList;
-        this.personList = personList;
-        this.eventList = eventList;
+    public LoadRequest(ArrayList<User> users, ArrayList<Person> persons, ArrayList<Event> events) {
+        this.users = users;
+        this.persons = persons;
+        this.events = events;
     }
 
     /**
-     * Gets the value of userList
+     * Gets the value of users
      *
-     * @return userList
+     * @return users
      */
-    public ArrayList<User> getUserList() {
-        return userList;
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
     /**
-     * Sets the userList - You can use getUserList() to get the value of userList
+     * Sets the users - You can use getUsers() to get the value of users
      *
-     * @param userList variable to be set
+     * @param users variable to be set
      */
-    public void setUserList(ArrayList<User> userList) {
-        this.userList = userList;
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
     }
 
     /**
-     * Gets the value of personList
+     * Gets the value of persons
      *
-     * @return personList
+     * @return persons
      */
-    public ArrayList<Person> getPersonList() {
-        return personList;
+    public ArrayList<Person> getPersons() {
+        return persons;
     }
 
     /**
-     * Sets the personList - You can use getPersonList() to get the value of personList
+     * Sets the persons - You can use getPersons() to get the value of persons
      *
-     * @param personList variable to be set
+     * @param persons variable to be set
      */
-    public void setPersonList(ArrayList<Person> personList) {
-        this.personList = personList;
+    public void setPersons(ArrayList<Person> persons) {
+        this.persons = persons;
     }
 
     /**
-     * Gets the value of eventList
+     * Gets the value of events
      *
-     * @return eventList
+     * @return events
      */
-    public ArrayList<Event> getEventList() {
-        return eventList;
+    public ArrayList<Event> getEvents() {
+        return events;
     }
 
     /**
-     * Sets the eventList - You can use getEventList() to get the value of eventList
+     * Sets the events - You can use getEvents() to get the value of events
      *
-     * @param eventList variable to be set
+     * @param events variable to be set
      */
-    public void setEventList(ArrayList<Event> eventList) {
-        this.eventList = eventList;
+    public void setEvents(ArrayList<Event> events) {
+        this.events = events;
     }
 
     @Override
     public String toString() {
         return "LoadRequest{" +
-                "userList=" + userList.toString() +
-                ", personList=" + personList.toString() +
-                ", eventList=" + eventList.toString() +
+                "users=" + users.toString() +
+                ", persons=" + persons.toString() +
+                ", events=" + events.toString() +
                 '}';
     }
 }

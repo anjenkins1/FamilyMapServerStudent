@@ -6,6 +6,7 @@ import data_access.UserDao;
 import data_access.AuthTokenDao;
 import data_access.PersonDao;
 import services.request.RegisterRequest;
+import services.results.LoginResult;
 import services.results.RegisterResult;
 
 import java.sql.Connection;
@@ -31,12 +32,17 @@ public class RegisterService extends Service {
     /**
      * Constructs RegisterService initializing database access objects through database connection
      */
-    public RegisterService() throws DataAccessException {
-
-        conn = database.openConnection();
-        userDataAcccess = new UserDao(conn);
-        personDataAccess = new PersonDao(conn);
-        authTokenDataAccess = new AuthTokenDao(conn);
+    public RegisterService() {
+        try {
+            conn = database.openConnection();
+            userDataAcccess = new UserDao(conn);
+            personDataAccess = new PersonDao(conn);
+            authTokenDataAccess = new AuthTokenDao(conn);
+        } catch(DataAccessException e) {
+            e.printStackTrace();
+            success = false;
+            message = "Error: Unable to open database connection";
+        }
     }
 
     /**
@@ -45,9 +51,47 @@ public class RegisterService extends Service {
      * @return <code>RegisterResult</code>
      */
     public RegisterResult register(RegisterRequest request) throws DataAccessException {
+        RegisterResult result = new RegisterResult();
+        try {
+            if (!userDataAcccess.userExists(request.getUsername())) {
+
+                String personID = generator.getRandomID();
+                String username = request.getUsername();
+                String password = request.getPassword();
+                String email = request.getEmail();
+                String firstName = request.getFirstName();
+                String lastName = request.getLastName();
+                String gender = request.getGender();
+
+                User user = new User(personID, username, password, email, firstName, lastName, gender);
+                userDataAcccess.insert(user);
 
 
-        return null;
+
+                result.setSuccess(true);
+                result.setAuthtoken(generator.getRandomID());
+                result.setPersonID(personID);
+                result.setUsername(request.getUsername());
+
+                AuthToken token = new AuthToken(user.getUsername(), result.getAuthtoken());
+                authTokenDataAccess.insert(token);
+
+                database.closeConnection(true);
+
+            }
+            else {
+                result.setMessage("Error: User already registered");
+                result.setSuccess(false);
+                database.closeConnection(false);
+            }
+
+            return result;
+
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            database.closeConnection(false);
+            return null;
+        }
     }
 
 }

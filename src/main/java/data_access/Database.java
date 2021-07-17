@@ -10,7 +10,7 @@ public class Database {
     /**
      * <code>Connection</code> object for instances of database access
      */
-    private Connection databaseCon;
+    protected Connection databaseCon;
 
     /**
      * Opens connection to database by passing through the path to the database and starting the transaction

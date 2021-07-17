@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class PostRequestHandler extends RequestHandler {
 
-    protected Object getObjectFromInputStream(InputStream stream, Object o) {
-        return serializer.deserialize(convertInputStreamToString(stream), o.getClass());
+    protected <T> T getObjectFromInputStream(InputStream stream, Class<T> o) {
+        return serializer.deserialize(convertInputStreamToString(stream), o);
     }
 
     public String convertInputStreamToString(InputStream stream) {

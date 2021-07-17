@@ -89,6 +89,10 @@ public class Person {
         this.spouseID = spouseID;
     }
 
+    public Person() {
+
+    }
+
     /**
      * Gets the value of personID
      *
