@@ -1,10 +1,9 @@
 package services;
 
 import data_access.DataAccessException;
+import data_generation.DataGeneration;
 import model.*;
-import data_access.UserDao;
-import data_access.AuthTokenDao;
-import data_access.PersonDao;
+import data_access.*;
 import services.request.RegisterRequest;
 import services.results.LoginResult;
 import services.results.RegisterResult;
@@ -26,23 +25,19 @@ public class RegisterService extends Service {
      */
     private UserDao userDataAcccess;
     private PersonDao personDataAccess;
+    private EventDao eventDataAccess;
     private AuthTokenDao authTokenDataAccess;
-    private Connection conn;
+    private DataGeneration dataGeneration;
 
     /**
      * Constructs RegisterService initializing database access objects through database connection
      */
     public RegisterService() {
-        try {
-            conn = database.openConnection();
-            userDataAcccess = new UserDao(conn);
-            personDataAccess = new PersonDao(conn);
-            authTokenDataAccess = new AuthTokenDao(conn);
-        } catch(DataAccessException e) {
-            e.printStackTrace();
-            success = false;
-            message = "Error: Unable to open database connection";
-        }
+        userDataAcccess = new UserDao(connection);
+        personDataAccess = new PersonDao(connection);
+        eventDataAccess = new EventDao(connection);
+        authTokenDataAccess = new AuthTokenDao(connection);
+        dataGeneration = new DataGeneration();
     }
 
     /**
@@ -63,18 +58,24 @@ public class RegisterService extends Service {
                 String lastName = request.getLastName();
                 String gender = request.getGender();
 
-                User user = new User(personID, username, password, email, firstName, lastName, gender);
-                userDataAcccess.insert(user);
+                userToRegister = new User(personID, username, password, email, firstName, lastName, gender);
+                userDataAcccess.insert(userToRegister);
 
+                personToAdd = new Person(personID, username, firstName, lastName, gender);
 
+                dataGeneration.generateData(personToAdd, 4);
+
+                addPersonsToDatabase(personDataAccess, dataGeneration.getPersons());
+
+                addEventsToDataBase(eventDataAccess, dataGeneration.getEvents());
 
                 result.setSuccess(true);
                 result.setAuthtoken(generator.getRandomID());
                 result.setPersonID(personID);
                 result.setUsername(request.getUsername());
 
-                AuthToken token = new AuthToken(user.getUsername(), result.getAuthtoken());
-                authTokenDataAccess.insert(token);
+                authtokenToAdd = new AuthToken(userToRegister.getUsername(), result.getAuthtoken());
+                authTokenDataAccess.insert(authtokenToAdd);
 
                 database.closeConnection(true);
 
@@ -94,4 +95,57 @@ public class RegisterService extends Service {
         }
     }
 
+    /**
+     * Gets the value of userToRegister
+     *
+     * @return userToRegister
+     */
+    public User getUserToRegister() {
+        return userToRegister;
+    }
+
+    /**
+     * Sets the userToRegister - You can use getUserToRegister() to get the value of userToRegister
+     *
+     * @param userToRegister variable to be set
+     */
+    public void setUserToRegister(User userToRegister) {
+        this.userToRegister = userToRegister;
+    }
+
+    /**
+     * Gets the value of personToAdd
+     *
+     * @return personToAdd
+     */
+    public Person getPersonToAdd() {
+        return personToAdd;
+    }
+
+    /**
+     * Sets the personToAdd - You can use getPersonToAdd() to get the value of personToAdd
+     *
+     * @param personToAdd variable to be set
+     */
+    public void setPersonToAdd(Person personToAdd) {
+        this.personToAdd = personToAdd;
+    }
+
+    /**
+     * Gets the value of authtokenToAdd
+     *
+     * @return authtokenToAdd
+     */
+    public AuthToken getAuthtokenToAdd() {
+        return authtokenToAdd;
+    }
+
+    /**
+     * Sets the authtokenToAdd - You can use getAuthtokenToAdd() to get the value of authtokenToAdd
+     *
+     * @param authtokenToAdd variable to be set
+     */
+    public void setAuthtokenToAdd(AuthToken authtokenToAdd) {
+        this.authtokenToAdd = authtokenToAdd;
+    }
 }

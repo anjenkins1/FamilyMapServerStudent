@@ -107,6 +107,19 @@ public class AuthTokenDao {
         }
         return null;
     }
+
+    public void clear() throws DataAccessException {
+        String sql = "DELETE FROM AuthToken";
+
+        try(PreparedStatement stmt = databaseConn.prepareStatement(sql)) {
+
+            stmt.executeUpdate();
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Unable to delete all tokens from database");
+        }
+    }
 }
 
 

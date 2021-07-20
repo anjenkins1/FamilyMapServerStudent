@@ -32,6 +32,15 @@ public class RegisterRequest {
         this.gender = gender;
     }
 
+    public RegisterRequest(User user) {
+        username = user.getUsername();
+        password = user.getPassword();
+        email = user.getEmail();
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
+        gender = user.getGender();
+    }
+
 
     /**
      * Gets the value of username

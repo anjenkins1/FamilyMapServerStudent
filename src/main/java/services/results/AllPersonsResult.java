@@ -6,19 +6,31 @@ import java.util.ArrayList;
 
 public class AllPersonsResult extends Result {
 
+    private ArrayList<Person> data;
+
     /**
      * Adds person list to message and makes success true
      * @param personList
      */
-    public AllPersonsResult(ArrayList<Person> personList) {
-        this.success = true;
+    public AllPersonsResult() {
+        //data = new ArrayList<>();
     }
 
     /**
-     * Error message is added to message and success is made false
-     * @param message
+     * Gets the value of data
+     *
+     * @return data
      */
-    public AllPersonsResult(String message) {
-        this.success = false;
+    public ArrayList<Person> getData() {
+        return data;
+    }
+
+    /**
+     * Sets the data - You can use getData() to get the value of data
+     *
+     * @param data variable to be set
+     */
+    public void setData(ArrayList<Person> data) {
+        this.data = data;
     }
 }

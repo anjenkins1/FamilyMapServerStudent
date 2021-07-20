@@ -32,7 +32,7 @@ public class DataGeneration {
     }
 
     public void generateParents(Person currPerson, int generation, int currYear, boolean isUsersParents) {
-        int parentalGap = currYear - generator.getRandomNumberInRange(20,40);
+        int parentalGap = currYear - generator.getRandomNumberInRange(30,40);
 
         Person mom = new Person();
         mom.setGender("f");
@@ -59,7 +59,7 @@ public class DataGeneration {
         }
 
         dad.setSpouseID(mom.getPersonID());
-        mom.setSpouseID(dad.getSpouseID());
+        mom.setSpouseID(dad.getPersonID());
 
         currPerson.setMotherID(mom.getPersonID());
         currPerson.setFatherID(dad.getPersonID());
@@ -67,10 +67,10 @@ public class DataGeneration {
         persons.add(mom);
         persons.add(dad);
 
-        int momBirthYear = parentalGap + generator.getRandomNumberInRange(-5,5);
-        int dadBirthYear = parentalGap + generator.getRandomNumberInRange(-5,5);
+        int momBirthYear = parentalGap + generator.getRandomNumberInRange(-2,2);
+        int dadBirthYear = parentalGap + generator.getRandomNumberInRange(-2,2);
 
-        int marriageYear = parentalGap - generator.getRandomNumberInRange(MIN_MARRIAGE_AGE, MAX_PREGNANT_AGE);
+        int marriageYear = parentalGap + generator.getRandomNumberInRange(MIN_MARRIAGE_AGE, MAX_PREGNANT_AGE);
 
         Location marriageLocation = generator.getRandomLocation();
 
@@ -90,7 +90,7 @@ public class DataGeneration {
     }
 
     private Event generateDeath(Person currPerson, int birthYear) {
-        int deathYear = birthYear - generator.getRandomNumberInRange(MAX_PREGNANT_AGE, MAX_DEATH_AGE);
+        int deathYear = birthYear + generator.getRandomNumberInRange(MAX_PREGNANT_AGE, MAX_DEATH_AGE);
         Event event = createNewEvent(currPerson.getAssociatedUsername(), currPerson.getPersonID());
         event.setEventType("death");
         event.setYear(deathYear);
@@ -142,7 +142,7 @@ public class DataGeneration {
     }
 
     /**
-     * Sets the persons - You can use getPersons() to get the value of persons
+     * Sets the persons - You can use getData() to get the value of persons
      *
      * @param persons variable to be set
      */
@@ -160,7 +160,7 @@ public class DataGeneration {
     }
 
     /**
-     * Sets the events - You can use getEvents() to get the value of events
+     * Sets the events - You can use getData() to get the value of events
      *
      * @param events variable to be set
      */

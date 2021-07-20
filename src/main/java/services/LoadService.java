@@ -3,12 +3,9 @@ package services;
 import data_access.*;
 import model.*;
 import services.request.LoadRequest;
-import services.request.LoginRequest;
 import services.results.LoadResult;
 
-import java.sql.Connection;
-
-public class LoadService extends Service{
+public class LoadService extends Service {
 
     /**
      * numUsersAdded = number of users added to the database
@@ -25,20 +22,15 @@ public class LoadService extends Service{
     private UserDao userDataAccess;
     private PersonDao personDataAccess;
     private EventDao eventsDataAccess;
-    private Connection conn;
 
     /**
      * Default LoadService Constructor
      */
     public LoadService() {
-        try {
-            conn = database.openConnection();
-            userDataAccess = new UserDao(conn);
-            personDataAccess = new PersonDao(conn);
-            eventsDataAccess = new EventDao(conn);
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        }
+        super();
+        userDataAccess = new UserDao(connection);
+        personDataAccess = new PersonDao(connection);
+        eventsDataAccess = new EventDao(connection);
     }
 
     /**
@@ -48,33 +40,39 @@ public class LoadService extends Service{
      * @throws DataAccessException
      */
     public LoadResult load(LoadRequest request) throws DataAccessException {
-        LoadResult result;
+        LoadResult result = new LoadResult();
 
         try {
             database.clearAllTables();
-            for (User s : request.getUsers()) {
-                numUsersAdded++;
-                userDataAccess.insert(s);
+            if (request.getEvents() == null || request.getPersons() == null || request.getUsers() == null) {
+                result.setMessage("Error: Missing required load data");
+                result.setSuccess(false);
+                closeDataStream(false, result);
+                return result;
             }
-            for (Person s : request.getPersons()) {
-                numPersonsAdded++;
-                personDataAccess.insert(s);
+            else {
+                for (User s : request.getUsers()) {
+                    numUsersAdded++;
+                    userDataAccess.insert(s);
+                }
+                for (Person s : request.getPersons()) {
+                    numPersonsAdded++;
+                    personDataAccess.insert(s);
+                }
+                for (Event s : request.getEvents()) {
+                    numEventsAdded++;
+                    eventsDataAccess.insert(s);
+                }
+                result.setMessage(String.format("Successfully added %d users, %d persons, and %d events to the database", numUsersAdded, numPersonsAdded, numEventsAdded));
+                result.setSuccess(true);
+                closeDataStream(true, result);
+                return result;
             }
-            for (Event s : request.getEvents()) {
-                numEventsAdded++;
-                eventsDataAccess.insert(s);
-            }
-            message = String.format("Successfully added %d users, %d persons, and %d events to the database", numUsersAdded, numPersonsAdded, numEventsAdded);
-            success = true;
-            result = new LoadResult(message, success);
-            database.closeConnection(true);
-            return result;
 
         } catch (DataAccessException e) {
-            message = "Error: " + e.toString();
-            success = false;
-            result = new LoadResult(message, success);
-            database.closeConnection(false);
+            result.setMessage("Error: " + e.toString());
+            result.setSuccess(false);
+            closeDataStream(false, result);
             return result;
         }
     }

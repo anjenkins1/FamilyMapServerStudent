@@ -6,23 +6,30 @@ import java.util.ArrayList;
 
 public class AllEventResult extends Result {
 
+    private ArrayList<Event> data;
+
+    /**
+     * Create new, empth <code>AllEventResult</code> Object
+     */
     public AllEventResult() {
         super();
     }
 
     /**
-     * Adds person list to message and makes success true
-     * @param personList
+     * Gets the value of data
+     *
+     * @return data
      */
-    public AllEventResult(ArrayList<Event> personList) {
-        this.success = true;
+    public ArrayList<Event> getData() {
+        return this.data;
     }
 
     /**
-     * Error message is added to message and success is made false
-     * @param message
+     * Sets the data - You can use getData() to get the value of data
+     *
+     * @param data variable to be set
      */
-    public AllEventResult(String message) {
-        this.success = false;
+    public void setData(ArrayList<Event> data) {
+        this.data = data;
     }
 }

@@ -1,4 +1,4 @@
-package personalTests.dao;
+package personalTests.daoTests;
 
 import client.Client;
 import logs.InitLogs;

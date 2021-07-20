@@ -1,4 +1,4 @@
-package personalTests.dao;
+package personalTests.daoTests;
 
 import client.Client;
 import logs.InitLogs;
@@ -135,7 +135,7 @@ public class PersonDaoTest {
             modelPersons.add(P_ALMA);
             modelPersons.add(P_NEPHI);
 
-            ArrayList<Person> testPersons = pDao.getAllPeople(A_ALMA.getAuthtoken());
+            ArrayList<Person> testPersons = pDao.getAllPeople(A_ALMA.getAssociatedUsername());
             assertNotNull(testPersons);
             assertEquals(modelPersons, testPersons, "Persons incorrectly accessed");
 
@@ -154,7 +154,7 @@ public class PersonDaoTest {
             pDao.insert(P_NEPHI);
 
             aDao.insert(A_ALMA);
-            ArrayList<Person> testPerson = pDao.getAllPeople(A_ALMA.getAuthtoken());
+            ArrayList<Person> testPerson = pDao.getAllPeople(A_ALMA.getAssociatedUsername());
             assertNotNull(testPerson);
             pDao.removeAllUserPersons(ALMA.getUsername());
             testPerson = pDao.getAllPeople(A_ALMA.getAuthtoken());

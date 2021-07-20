@@ -35,7 +35,7 @@ public class FillHandler extends PostRequestHandler {
 
             FillResult result = fillService.fill();
             if (result.isSuccess()) {
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_ACCEPTED, 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             }
             else {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

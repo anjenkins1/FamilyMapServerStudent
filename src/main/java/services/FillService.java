@@ -45,6 +45,7 @@ public class FillService extends Service {
      * @param numGenerations - user defined numGenerations
      */
     public FillService(String username, int numGenerations)  {
+        super();
         dataGenerator = new DataGeneration();
         this.username = username;
         this.numGenerations = numGenerations;
@@ -61,7 +62,7 @@ public class FillService extends Service {
      */
     public FillResult fill() {
 
-        FillResult result;
+        FillResult result = new FillResult();
 
         try {
 
@@ -69,35 +70,41 @@ public class FillService extends Service {
             eventDataAccess.removeAllUserEvents(username);
 
             User user = userDataAccess.find(username);
-            Person userPerson = new Person();
-            userPerson.setGender(user.getGender());
-            userPerson.setPersonID(generator.getRandomID());
-            userPerson.setAssociatedUsername(username);
-            userPerson.setFirstName(user.getFirstName());
-            userPerson.setLastName(user.getLastName());
 
-            dataGenerator.generateData(userPerson, numGenerations);
-            for (Person p : dataGenerator.getPersons()) {
-                numPersonsAdded++;
-                personDataAccess.insert(p);
+            if (user != null) {
+
+                Person userPerson = new Person();
+                userPerson.setGender(user.getGender());
+                userPerson.setPersonID(generator.getRandomID());
+                userPerson.setAssociatedUsername(username);
+                userPerson.setFirstName(user.getFirstName());
+                userPerson.setLastName(user.getLastName());
+
+                dataGenerator.generateData(userPerson, numGenerations);
+                addPersonsToDatabase(personDataAccess, dataGenerator.getPersons());
+                addEventsToDataBase(eventDataAccess, dataGenerator.getEvents());
+
+                numEventsAdded = dataGenerator.getEvents().size();
+                numPersonsAdded = dataGenerator.getPersons().size();
+
+                result.setMessage(String.format("Successfully added %d persons and %d events added", numPersonsAdded, numEventsAdded));
+                result.setSuccess(true);
+                closeDataStream(true, result);
+                return result;
             }
-            for (Event e : dataGenerator.getEvents()) {
-                numEventsAdded++;
-                eventDataAccess.insert(e);
-            }
-            message = String.format("Fill succeeded: %d people added and %d events added", numPersonsAdded, numEventsAdded);
-            success = true;
-            result = new FillResult(message, success);
-            database.closeConnection(true);
+
+            result.setMessage("Error: Bad Username");
+            result.setSuccess(false);
+            closeDataStream(false, result);
             return result;
+
         } catch (DataAccessException e) {
             e.printStackTrace();
-            message = "Error: Unable to fill database";
-            success = false;
-            result = new FillResult(message, success);
+            result.setMessage("Error: Unable to fill database");
+            result.setSuccess(false);
+            closeDataStream(false, result);
             return result;
         }
-
     }
 
     /**

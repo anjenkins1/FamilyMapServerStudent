@@ -10,4 +10,8 @@ public class LoadResult extends Result {
         this.message = message;
         this.success = success;
     }
+
+    public LoadResult() {
+
+    }
 }

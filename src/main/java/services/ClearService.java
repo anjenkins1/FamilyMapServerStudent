@@ -22,21 +22,19 @@ public class ClearService extends Service {
     public Result clear() {
         boolean success;
         String message;
-        Result result;
+        Result result = new Result();
         try {
-            database.openConnection();
             database.clearAllTables();
-            database.closeConnection(true);
         } catch(DataAccessException e) {
             e.printStackTrace();
-            success = false;
-            message = "Error: Unable to clear tables";
-            result = new Result(message, success);
+            result.setSuccess(false);
+            result.setMessage("Error: Unable to clear tables");
+            closeDataStream(false, result);
             return result;
         }
-        success = true;
-        message = "Clear succeeded";
-        result = new Result(message, success);
+        result.setSuccess(true);
+        result.setMessage("Clear succeeded");
+        closeDataStream(true, result);
         return result;
     }
 }

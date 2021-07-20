@@ -22,7 +22,7 @@ public class LoadHandler extends PostRequestHandler {
                 LoadService loadService = new LoadService();
                 LoadRequest request = serializer.deserialize(convertInputStreamToString(exchange.getRequestBody()), LoadRequest.class);
                 LoadResult result = loadService.load(request);
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_ACCEPTED, 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 OutputStream responseBody = exchange.getResponseBody();
                 writeJsonResponse(result, responseBody);
                 responseBody.close();

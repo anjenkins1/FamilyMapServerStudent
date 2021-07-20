@@ -35,9 +35,7 @@ public class MainServer {
         server.createContext("/clear", new ClearHandler());
         server.createContext("/fill/", new FillHandler());
         server.createContext("/load", new LoadHandler());
-        server.createContext("/person");
-        server.createContext("/person/");
-        server.createContext("/event");
-        server.createContext("/event/");
+        server.createContext("/person", new PersonHandler());
+        server.createContext("/event", new EventHandler());
     }
 }

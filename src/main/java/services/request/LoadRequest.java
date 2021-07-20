@@ -57,7 +57,7 @@ public class LoadRequest {
     }
 
     /**
-     * Sets the persons - You can use getPersons() to get the value of persons
+     * Sets the persons - You can use getData() to get the value of persons
      *
      * @param persons variable to be set
      */
@@ -75,7 +75,7 @@ public class LoadRequest {
     }
 
     /**
-     * Sets the events - You can use getEvents() to get the value of events
+     * Sets the events - You can use getData() to get the value of events
      *
      * @param events variable to be set
      */

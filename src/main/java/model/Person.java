@@ -229,7 +229,7 @@ public class Person {
     }
 
     /**
-     * Sets the spouseID - You can use getSpouseID() to get the value of spouseID
+     * Sets the spouseID - You can use getSpouse() to get the value of spouseID
      *
      * @param spouseID variable to be set
      */

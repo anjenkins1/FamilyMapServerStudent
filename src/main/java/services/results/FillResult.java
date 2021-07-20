@@ -11,4 +11,8 @@ public class FillResult extends Result {
         this.message = message;
         this.success = success;
     }
+
+    public FillResult() {
+
+    }
 }

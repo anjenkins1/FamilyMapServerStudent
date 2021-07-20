@@ -109,7 +109,7 @@ public class PersonDao {
      * @param auth_token - user <code>String</code> auth token to get the current user
      * @return <code>List<Person></code>
      */
-    public  ArrayList<Person> getAllPeople (String auth_token) throws DataAccessException {
+    public ArrayList<Person> getAllPeopleAuth (String auth_token) throws DataAccessException {
 
         ArrayList<Person> people = new ArrayList<>();
         AuthTokenDao aDao = new AuthTokenDao(databaseConn);
@@ -154,6 +154,42 @@ public class PersonDao {
             e.printStackTrace();
             throw new DataAccessException("No authentication token associated with that user");
         }
+    }
+
+    public ArrayList<Person> getAllPeople (String username) throws DataAccessException {
+
+        ArrayList<Person> people = new ArrayList<>();
+        Person returnPerson;
+        ResultSet rs = null;
+
+        String sql = "SELECT * FROM Person WHERE associated_username = '" + username + "'";
+        try (PreparedStatement stmt = databaseConn.prepareStatement(sql)) {
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                returnPerson = new Person(rs.getString("person_id"), rs.getString("associated_username"),
+                        rs.getString("first_name"), rs.getString("last_name"), rs.getString("gender"),
+                        rs.getString("father_id"), rs.getString("mother_id"), rs.getString("spouse_id"));
+                people.add(returnPerson);
+            }
+            if (people.isEmpty()) {
+                return null;
+            }
+            return people;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Unable to access specified Person");
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     /**

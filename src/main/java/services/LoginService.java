@@ -16,19 +16,12 @@ public class LoginService extends Service {
      */
     private UserDao userDataAccess;
     private AuthTokenDao authTokenDataAccess;
-    private Connection conn;
 
 
     public LoginService() {
-        try {
-            conn = database.openConnection();
-            userDataAccess = new UserDao(conn);
-            authTokenDataAccess = new AuthTokenDao(conn);
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-            success = false;
-            message = "Error";
-        }
+        super();
+        userDataAccess = new UserDao(connection);
+        authTokenDataAccess = new AuthTokenDao(connection);
     }
 
     /**
@@ -42,8 +35,8 @@ public class LoginService extends Service {
             User user = userDataAccess.find(request.getUsername(), request.getPassword());
             AuthToken authToken = authTokenDataAccess.getAuthToken(request.getUsername());
             if (user != null) {
+                result.setSuccess(true);
                 if (authToken == null) {
-                    result.setSuccess(true);
                     result.setAuthtoken(generator.getRandomID());
                     result.setPersonID(user.getPersonID());
                     result.setUsername(user.getUsername());
@@ -51,13 +44,13 @@ public class LoginService extends Service {
                     AuthToken token = new AuthToken(user.getUsername(), result.getAuthtoken());
                     authTokenDataAccess.insert(token);
 
-                    database.closeConnection(true);
                 }
                 else {
-                    result.setMessage("Error: User already logged in");
-                    result.setSuccess(false);
-                    database.closeConnection(false);
+                    result.setAuthtoken(authToken.getAuthtoken());
+                    result.setPersonID(user.getPersonID());
+                    result.setUsername(user.getUsername());
                 }
+                database.closeConnection(true);
             }
             else {
                 result.setMessage("Error: User not registered or incorrect password");

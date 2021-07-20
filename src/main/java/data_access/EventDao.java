@@ -91,7 +91,7 @@ public class EventDao {
      * @param auth_token - used to find the events associated with the user that is logged in with this auth_token
      * @return <code>ArrayList<Event></code>
      */
-    public ArrayList<Event> getAllEvents (String auth_token) throws DataAccessException{
+    public ArrayList<Event> getAllEventsAuth (String auth_token) throws DataAccessException{
 
         ArrayList<Event> events = new ArrayList<>();
         AuthTokenDao aDao = new AuthTokenDao(databaseConn);
@@ -134,6 +134,45 @@ public class EventDao {
         } catch(DataAccessException e) {
             e.printStackTrace();
             throw new DataAccessException("No authentication token associated with that user");
+        }
+    }
+
+    /**
+     * Gets a <code>List</code> of <code>Events</code> for ALL events for ALL family members of the current user
+     * @param username - used to find the events associated with the user that is logged in
+     * @return <code>ArrayList<Event></code>
+     */
+    public ArrayList<Event> getAllEvents (String username) throws DataAccessException{
+
+        ArrayList<Event> events = new ArrayList<>();
+        Event returnEvent;
+        ResultSet rs = null;
+
+        String sql = "SELECT * FROM Event WHERE associated_username = '" + username + "'";
+        try (PreparedStatement stmt = databaseConn.prepareStatement(sql)) {
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                returnEvent = new Event(rs.getString("associated_username"), rs.getString("event_id"), rs.getString("person_id"), rs.getFloat("latitude"), rs.getFloat("longitude"),
+                        rs.getString("country"), rs.getString("city"), rs.getString("event_type"), rs.getInt("year"));
+                events.add(returnEvent);
+            }
+            if (events.isEmpty()) {
+                return null;
+            }
+            return events;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Unable to access specified Event");
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
