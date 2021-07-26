@@ -3,8 +3,8 @@ package services;
 import data_access.DataAccessException;
 import data_access.EventDao;
 import model.Event;
-import services.results.AllEventResult;
-import services.results.SingleEventResult;
+import results.AllEventResult;
+import results.SingleEventResult;
 
 import java.util.ArrayList;
 

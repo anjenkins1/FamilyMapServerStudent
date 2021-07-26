@@ -3,8 +3,8 @@ package services;
 import data_access.DataAccessException;
 import data_access.PersonDao;
 import model.Person;
-import services.results.AllPersonsResult;
-import services.results.SinglePersonResult;
+import results.AllPersonsResult;
+import results.SinglePersonResult;
 
 import java.util.ArrayList;
 

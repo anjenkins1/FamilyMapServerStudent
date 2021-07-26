@@ -1,9 +1,8 @@
 package services;
 
-import com.sun.net.httpserver.Authenticator;
 import data_access.*;
-import services.results.ClearResult;
-import services.results.Result;
+import results.ClearResult;
+import results.Result;
 
 public class ClearService extends Service {
 

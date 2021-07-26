@@ -3,9 +3,8 @@ package services;
 import data_generation.RandomItemGenerator;
 import model.*;
 import data_access.*;
-import services.results.Result;
+import results.Result;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.util.ArrayList;
 

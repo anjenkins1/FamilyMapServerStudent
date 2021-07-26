@@ -2,9 +2,9 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import services.PersonService;
-import services.results.AllPersonsResult;
-import services.results.Result;
-import services.results.SinglePersonResult;
+import results.AllPersonsResult;
+import results.Result;
+import results.SinglePersonResult;
 
 import java.io.IOException;
 import java.io.OutputStream;

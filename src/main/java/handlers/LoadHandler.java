@@ -2,12 +2,11 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import data_access.DataAccessException;
-import services.ClearService;
 import services.LoadService;
-import services.request.LoadRequest;
-import services.request.LoginRequest;
-import services.results.LoadResult;
-import services.results.Result;
+import request.LoadRequest;
+import request.LoginRequest;
+import results.LoadResult;
+import results.Result;
 
 import java.io.IOException;
 import java.io.OutputStream;

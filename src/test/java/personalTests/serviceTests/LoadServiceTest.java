@@ -1,7 +1,6 @@
 package personalTests.serviceTests;
 
 import com.google.gson.stream.JsonReader;
-import handlers.JsonSerializer;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,10 +10,10 @@ import com.google.gson.GsonBuilder;
 import data_access.*;
 import model.*;
 import services.*;
-import services.request.LoadRequest;
-import services.request.RegisterRequest;
-import services.results.LoadResult;
-import services.results.RegisterResult;
+import request.LoadRequest;
+import request.RegisterRequest;
+import results.LoadResult;
+import results.RegisterResult;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

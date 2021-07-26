@@ -4,12 +4,9 @@ import data_access.DataAccessException;
 import data_generation.DataGeneration;
 import model.*;
 import data_access.*;
-import services.request.RegisterRequest;
-import services.results.LoginResult;
-import services.results.RegisterResult;
-
-import java.sql.Connection;
-import java.sql.SQLException;
+import request.RegisterRequest;
+import results.LoginResult;
+import results.RegisterResult;
 
 public class RegisterService extends Service {
 

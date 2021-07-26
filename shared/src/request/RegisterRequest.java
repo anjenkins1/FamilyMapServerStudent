@@ -1,4 +1,4 @@
-package services.request;
+package request;
 
 import model.User;
 

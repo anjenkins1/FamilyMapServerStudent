@@ -1,4 +1,4 @@
-package services.results;
+package results;
 
 public class SinglePersonResult extends Result {
 

@@ -3,7 +3,7 @@ package services;
 import data_access.*;
 import data_generation.DataGeneration;
 import model.*;
-import services.results.FillResult;
+import results.FillResult;
 
 
 public class FillService extends Service {

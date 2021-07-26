@@ -1,4 +1,4 @@
-package services.results;
+package results;
 
 import model.AuthToken;
 import model.User;

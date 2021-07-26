@@ -1,9 +1,11 @@
 package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
+import results.AllEventResult;
 import services.EventService;
-import services.PersonService;
-import services.results.*;
+import results.Result;
+import results.SingleEventResult;
+import results.AllPersonsResult;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -28,7 +30,7 @@ public class EventHandler extends AuthorizingRequestHandler {
                 if (authResult.isSuccess()) {
                     if (urlPath.substring(1).contains("/")) {
                         eventID = urlPath.substring(urlPath.lastIndexOf("/") + 1);
-                        SingleEventResult result = eventService.getOneEvent(eventID);
+                        SingleEventResult result =  eventService.getOneEvent(eventID);
                         if (result.isSuccess()) {
                             exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                         }

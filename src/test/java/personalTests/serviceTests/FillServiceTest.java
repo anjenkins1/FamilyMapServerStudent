@@ -6,14 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import data_access.*;
 import model.*;
 import services.*;
-import services.request.RegisterRequest;
-import services.results.AllEventResult;
-import services.results.AllPersonsResult;
-import services.results.FillResult;
-import services.results.RegisterResult;
-
-import javax.xml.crypto.Data;
-import java.util.ArrayList;
+import request.RegisterRequest;
+import results.AllEventResult;
+import results.AllPersonsResult;
+import results.FillResult;
+import results.RegisterResult;
 
 
 public class FillServiceTest {

@@ -2,8 +2,8 @@ package services;
 
 import data_access.*;
 import model.*;
-import services.request.LoadRequest;
-import services.results.LoadResult;
+import request.LoadRequest;
+import results.LoadResult;
 
 public class LoadService extends Service {
 

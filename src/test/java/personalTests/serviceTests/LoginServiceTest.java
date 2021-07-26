@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import data_access.*;
 import model.*;
 import services.*;
-import services.request.LoginRequest;
-import services.request.RegisterRequest;
-import services.results.LoginResult;
-import services.results.RegisterResult;
+import request.LoginRequest;
+import request.RegisterRequest;
+import results.LoginResult;
+import results.RegisterResult;
 
 
     public class LoginServiceTest {

@@ -1,4 +1,4 @@
-package services.request;
+package request;
 
 public class LoginRequest {
 

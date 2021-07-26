@@ -2,7 +2,7 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import services.ClearService;
-import services.results.Result;
+import results.Result;
 
 import java.io.IOException;
 import java.io.OutputStream;

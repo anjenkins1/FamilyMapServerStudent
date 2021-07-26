@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import data_access.*;
 import model.*;
-import passoffresult.PersonResult;
 import services.*;
-import services.request.RegisterRequest;
-import services.results.AllEventResult;
-import services.results.AllPersonsResult;
-import services.results.RegisterResult;
-import services.results.SinglePersonResult;
+import request.RegisterRequest;
+import results.AllEventResult;
+import results.AllPersonsResult;
+import results.RegisterResult;
+import results.SinglePersonResult;
 
 
 public class PersonServiceTest {

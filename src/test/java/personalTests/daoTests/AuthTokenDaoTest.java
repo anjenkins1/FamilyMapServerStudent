@@ -4,7 +4,6 @@ import client.Client;
 import data_access.AuthTokenDao;
 import data_access.DataAccessException;
 import data_access.Database;
-import data_access.EventDao;
 import logs.InitLogs;
 import model.AuthToken;
 import model.Event;
@@ -12,7 +11,6 @@ import model.User;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;

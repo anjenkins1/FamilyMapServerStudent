@@ -1,13 +1,10 @@
 package services;
 
 import data_access.*;
-import data_generation.RandomItemGenerator;
 import model.AuthToken;
 import model.User;
-import services.request.LoginRequest;
-import services.results.LoginResult;
-
-import java.sql.Connection;
+import request.LoginRequest;
+import results.LoginResult;
 
 public class LoginService extends Service {
 

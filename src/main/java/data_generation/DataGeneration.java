@@ -2,7 +2,6 @@ package data_generation;
 
 import model.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class DataGeneration {
@@ -70,7 +69,7 @@ public class DataGeneration {
         int momBirthYear = parentalGap + generator.getRandomNumberInRange(-2,2);
         int dadBirthYear = parentalGap + generator.getRandomNumberInRange(-2,2);
 
-        int marriageYear = parentalGap + generator.getRandomNumberInRange(MIN_MARRIAGE_AGE, MAX_PREGNANT_AGE);
+        int marriageYear = parentalGap + generator.getRandomNumberInRange(MIN_MARRIAGE_AGE + 2, MAX_PREGNANT_AGE - 2);
 
         Location marriageLocation = generator.getRandomLocation();
 

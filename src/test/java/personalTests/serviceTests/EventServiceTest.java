@@ -8,13 +8,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import services.ClearService;
 import services.EventService;
-import services.PersonService;
 import services.RegisterService;
-import services.request.RegisterRequest;
-import services.results.*;
+import request.RegisterRequest;
+import results.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class EventServiceTest {
     private RandomItemGenerator generator = new RandomItemGenerator();

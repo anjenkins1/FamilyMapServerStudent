@@ -1,4 +1,4 @@
-package services.results;
+package results;
 
 import model.Person;
 
@@ -10,7 +10,6 @@ public class AllPersonsResult extends Result {
 
     /**
      * Adds person list to message and makes success true
-     * @param personList
      */
     public AllPersonsResult() {
         //data = new ArrayList<>();

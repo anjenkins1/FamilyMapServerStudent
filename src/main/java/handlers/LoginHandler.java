@@ -1,17 +1,14 @@
 package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import data_access.DataAccessException;
-import services.ClearService;
 import services.LoginService;
-import services.request.LoadRequest;
-import services.request.LoginRequest;
-import services.results.LoadResult;
-import services.results.LoginResult;
-import services.results.Result;
+import request.LoadRequest;
+import request.LoginRequest;
+import results.LoadResult;
+import results.LoginResult;
+import results.Result;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;

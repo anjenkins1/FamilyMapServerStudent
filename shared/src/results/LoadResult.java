@@ -1,4 +1,4 @@
-package services.results;
+package results;
 
 public class LoadResult extends Result {
     /**
